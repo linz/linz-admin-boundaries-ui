@@ -1,1 +1,3 @@
 *.gradle
+# Temp file for running gradle locally with cmd line variables
+*rungradle.bat
