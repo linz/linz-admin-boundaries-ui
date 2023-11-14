@@ -23,8 +23,8 @@ import javax.management.MBeanServerFactory;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 
 import nz.govt.linz.AdminBoundaries.DABFormatterUser.TPA;
 import nz.govt.linz.AdminBoundaries.UserAdmin.User;

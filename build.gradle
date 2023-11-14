@@ -9,17 +9,18 @@ This program is released under the terms of the new BSD license. See the
 LICENSE file for more information.
  */
  
- buildscript {
+buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
+        gradlePluginPortal()
         //mvnrepository { url "https://mvnrepository.com/artifact/" }
         //maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
         classpath "org.postgresql:postgresql:9.4-1206-jdbc42"
-        classpath 'com.bmuschko:gradle-cargo-plugin:2.7.1'
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.9.0'
         //pygradle
         //classpath "gradle.plugin.com.linkedin.pygradle:pygradle-plugin:0.3.24"
         //debpackage
@@ -125,6 +126,10 @@ task cargosetup {
 /*task flake8 (overwrite: true){
    ignore = "E3"
 }*/
+// Added as the gradle plugin complains about this not being there
+cargoRedeployRemote.dependsOn war
+cargoDeployRemote.dependsOn war
+cargoUndeployRemote.dependsOn war
 
 task redeploy {
     dependsOn cargosetup, cargoRedeployRemote
@@ -157,7 +162,7 @@ dependencies {
     // TEMPORARILY ADDED, LATEST VERSION OF OLDER JAVAX SERVLET LIBRARY
     providedCompile "javax.servlet:javax.servlet-api:4.0.1"
     // TEMPORARILY ADDED, LATEST VERSION OF OLDER JAVAX SERVLET LIBRARY
-    
+
     providedCompile "org.apache.tomcat:tomcat-catalina:$catalinaVersion" 
     providedCompile "org.apache.tomcat:tomcat-util:$tomcatVersion"
     providedCompile "org.postgresql:postgresql:$postgresqlJDBCVersion"
@@ -187,3 +192,6 @@ dependencies {
 }
 
 
+// test {
+//     useJUnitPlatform()
+// }

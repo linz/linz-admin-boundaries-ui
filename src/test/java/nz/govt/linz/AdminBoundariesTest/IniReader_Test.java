@@ -13,21 +13,21 @@ package nz.govt.linz.AdminBoundariesTest;
 
 import nz.govt.linz.AdminBoundaries.IniReader;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class IniReader_Test {
 	
 	private static final String test_path = "testconfig.ini";
@@ -41,7 +41,7 @@ public class IniReader_Test {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("serial")
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {	
 		//System.out.println("before class init");
 		restore = new HashMap<>();
@@ -50,19 +50,19 @@ public class IniReader_Test {
 		restore.put("database",new HashMap<String,String>(){{put("host", "db.domain.com");put("port", "8080");}});
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 		//System.out.println("after class");
 		restore = null;
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		reader1 = new IniReader("r1"+test_path);
 		reader1.dump(restore);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 	}
 

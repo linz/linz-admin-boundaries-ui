@@ -18,20 +18,20 @@ import nz.govt.linz.AdminBoundaries.UserAdmin.UserAIMS;
 import nz.govt.linz.AdminBoundaries.UserAdmin.UserPostgreSQL;
 import nz.govt.linz.AdminBoundaries.UserAdmin.UserTomcat;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class DABFormatterUser_Test {
 
 	
@@ -40,19 +40,19 @@ public class DABFormatterUser_Test {
 	private final static int aa_form_len = 1453;
 	
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 	}
 	

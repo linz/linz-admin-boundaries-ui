@@ -19,8 +19,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 
 import static nz.govt.linz.AdminBoundaries.DABFormatter.BNAV;
 

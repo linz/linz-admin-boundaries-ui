@@ -17,7 +17,7 @@ package nz.govt.linz.AdminBoundariesTest;
 
 import nz.govt.linz.AdminBoundaries.DABFormatter;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +27,15 @@ import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class DABFormatter_Test {
 	
 	private static Map<String,Map<String,String>> formmap;
@@ -54,7 +54,7 @@ public class DABFormatter_Test {
 	
 	
 	@SuppressWarnings("serial")
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		//temp should be bypased, colmap should get textarea
 		formmap = new LinkedHashMap<>();
@@ -77,17 +77,17 @@ public class DABFormatter_Test {
 		descmap.put("SECTION_3",  new String[]{"5first", "5second", "5third"});
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 		formmap = null;
 		tablelist = null;
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 	}
 	

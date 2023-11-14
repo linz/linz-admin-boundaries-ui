@@ -13,15 +13,15 @@ package nz.govt.linz.AdminBoundariesTest;
 
 import nz.govt.linz.AdminBoundaries.DABConnector;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
 import org.jmock.States;
@@ -42,7 +42,7 @@ import java.nio.file.Path;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class DABConnector_Test {
 	
 	public final static boolean USEMOCK = false;
@@ -84,7 +84,7 @@ public class DABConnector_Test {
     
 	private DABConnector connector;	
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		context = new Mockery();
 		datasource_m = context.mock(DataSource.class);
@@ -100,7 +100,7 @@ public class DABConnector_Test {
 		metadata_m4  = context.mock(ResultSetMetaData.class,"count_md_i");
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 		context = null;
 		datasource_m = null;
@@ -116,7 +116,7 @@ public class DABConnector_Test {
 		metadata_m4  = null;
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		if (USEMOCK) { 
 			connector = getConnector_mock();
@@ -196,7 +196,7 @@ public class DABConnector_Test {
 		return connector_m;
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 	}	
 	
@@ -284,9 +284,9 @@ public class DABConnector_Test {
 	/**
 	 * Tests the quotespace function throws an error on null input
 	 */
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void test_80_quotespace_err() {
-		connector.quoteSpace(null);
+		assertThrows(NullPointerException.class, () -> {connector.quoteSpace(null);});
 	}
 
 }
