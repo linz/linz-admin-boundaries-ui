@@ -58,8 +58,8 @@ public class DABServletSummary extends DABServlet {
 		description = String.join("\n", 
 				"The downloader interface queries the four destination admin boundary tables comparing them against their temporary source "
 				+ "counterparts. Each table-set can be in one of three states, Vacant, Loaded or Transferred. If a table-set is Vacant no temporary "
-				+ "tables exist and the import tables must be populated from file/WFS.",
-				"The admin boundaries tables are populated over WFS from the StatsNZ data service and from a locally saved file; nz_localities.csv. "
+				+ "tables exist and the import tables must be populated from WFS via the Load button.",
+				"The admin boundaries tables are populated over WFS from the StatsNZ Datafinder and LINZ Data Service. "
 				+ "The StatsNZ dataservice provides; meshblock, meshblock_concordance and territorial_authority.",
 				"If a table-set is in the Loaded state the import tables have been built and column changes applied. At this stage selected users "
 				+ "will be notified and if approved, changes can be pushed through to the final destination tables.",
