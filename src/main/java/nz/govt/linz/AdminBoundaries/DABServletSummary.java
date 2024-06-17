@@ -68,7 +68,7 @@ public class DABServletSummary extends DABServlet {
 				+ "which returns the results from the table_version function get_table_differences() indicating row number and proposed operation "
 				+ "(u)pdate, (a)dd or (d)elete",
 				"<br/><b>Actions</b>",
-				"<br/><u>LOAD</u> :: Load import tables from file",
+				"<br/><u>LOAD</u> :: Load import tables from Stats NZ / LINZ via WFS",
 				"<br/><u>TRANSFER</u> :: Transfer import tables to destination tables.",
 				"<br/><u>REJECT</u> :: Delete import tables.",
 				"<br/><u>OPTIONAL</u> :: Run any configured post-processing functions.");
@@ -129,6 +129,9 @@ public class DABServletSummary extends DABServlet {
          * If action requested Then start processcontrol and return result.
          * Otherwise return the standard summary table
          */
+
+		String message = "Compare: " + compare + " Action: " + action;
+		LOGGER.info(message);
         
         Map<String, String> info = new HashMap<>(); 
         
