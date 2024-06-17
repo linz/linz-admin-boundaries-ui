@@ -244,8 +244,9 @@ public class DABConnector {
 		String t1 = String.format("%s.%s", ABs, ti.dst());
 		String t2 = String.format("%s.%s", ABIs, ti.tmp());
 		String rec = String.format("T(code char(1), id %s)", colType(ABs + "." + ti.dst(), ti.key()));
-		String query = String.format("SELECT T.id, T.code FROM table_version.ver_get_table_differences('%s','%s','%s') as %s",
-				t1, t2, ti.key(), rec);
+		// Small change to query. This will force a custom order on the table to show [D]Deletions, [I]Insertions, [X]Updates, and then finally [U]Unchanged
+		String query = String.format("SELECT T.id, T.code FROM table_version.ver_get_table_differences('%s','%s','%s') as %s ORDER BY array_position(array['D','I','X','U'], T.code), T.id",
+			t1, t2, ti.key(), rec);
 		return "<article><p>"+query+"</p>" + DABFormatter.formatTable(ti.dst(), executeQuery(query)) + "</article>";
 	}
 
@@ -287,10 +288,11 @@ public class DABConnector {
 			
 			LOGGER.finer("2CQa " + col_query + " / " + columns);
 			// tmp files match dst files
-			String tt = String.format("SELECT %s FROM %s.%s", columns, ABIs, ti.tmp());
-			String dt = String.format("SELECT %s FROM %s.%s", columns, ABs, ti.dst());
-			String cmp_query = String.format("SELECT NOT EXISTS (%s EXCEPT %s UNION %s EXCEPT %s)", tt, dt, dt, tt);
-			
+			// Updated this query to use CTEs as the previous query was failing to show the LOADED status for meshblock concordance. Showed COMPLETE instead if only new records existed.
+			String tt = String.format("SELECT %s FROM %s.%s EXCEPT SELECT %s FROM %s.%s", columns, ABIs, ti.tmp(), columns, ABs, ti.dst());
+			String dt = String.format("SELECT %s FROM %s.%s EXCEPT SELECT %s FROM %s.%s", columns, ABs, ti.dst(), columns, ABIs, ti.tmp());
+			String cmp_query = String.format("WITH tt AS (%s), dt AS (%s) SELECT NOT EXISTS (SELECT * FROM tt UNION ALL SELECT * FROM dt)", tt, dt);
+
 			try {
 				ResultSet rs = exeQuery(cmp_query);
 				rs.next();
