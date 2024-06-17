@@ -17,6 +17,7 @@ import java.nio.file.Paths;
  */
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jakarta.servlet.*;
@@ -61,6 +62,8 @@ public class DABServlet extends HttpServlet {
      * Servlet initialisation method setting title and message text
      */
 	public void init() throws ServletException {
+		// Force Logger to work at its FINEST (for debugging)
+		// LOGGER.setLevel(Level.FINEST);
 		try {
 			hostname = InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException uhe) {
