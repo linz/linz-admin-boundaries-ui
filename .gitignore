@@ -4,3 +4,4 @@ gradle.properties
 *rungradle.bat
 *build
 **/webapp/WEB-INF/scripts
+*bin
