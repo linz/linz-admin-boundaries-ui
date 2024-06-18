@@ -35,26 +35,28 @@ buildscript {
 plugins {
   //id "com.linkedin.python" version "0.3.24"
   //id 'com.linkedin.python-sdist' version '0.9.11'
-  id("com.pswidersk.python-plugin") version "2.4.0"
+  //id("com.pswidersk.python-plugin") version "2.4.0"
   id 'eclipse'
 }
 
-pythonPlugin {
-    pythonVersion.set("3.9.5")
-    condaVersion.set("23.10.0")
-    condaInstaller.set("Miniconda3")
-    condaRepoUrl.set("https://anaconda.org/conda-forge")
-}
+// pythonPlugin {
+//     pythonVersion.set("3.9.5")
+//     condaVersion.set("23.10.0")
+//     condaInstaller.set("Miniconda3")
+//     condaRepoUrl.set("https://anaconda.org/conda-forge")
+// }
 
 ext {
     postgresqlJDBCVersion = '42.6.0'
     postgresqlApiVersion = '42.6.0'
     postGISApiVersion = '2021.1.0'
+    javaxServletApiVersion = '4.0.1'
     jakartaServletApiVersion = '6.0.0'
     catalinaVersion = '10.1.2'
     tomcatVersion = '10.1.2'
     jakartaJSONAPIVersion = '2.1.3'
     jakartaJSONVersion = '2.0.1'
+    eclipseParssonVersion = '1.1.5'
     junitVersion = '5.10.1'
     jmockVersion = '2.12.0'
     jsoupVersion = '1.16.2'
@@ -80,19 +82,28 @@ def packVersion = '0.2'
 //packages the uploader component linz-admin-boundaries-uploader into src/main/webapp
 
 task copyscripts(type: Copy) {
-     //dependsOn test
-     //from('scripts') {
-     from('../linz-admin-boundaries-uploader/labu') {
-         include '**/*.py'
-         include '**/*.ini'
-         include '**/*.properties'
-         include '**/*.template'
-     }
-     into 'src/main/webapp/WEB-INF/scripts'
+    //dependsOn test
+    //from('scripts') {
+    from('../linz-admin-boundaries-uploader/labu') {
+        include '**/*.py'
+        include '**/*.ini'
+        include '**/*.properties'
+        include '**/*.template'
+    }
+    into 'src/main/webapp/WEB-INF/scripts'
+}
+
+task copysql(type: Copy) {
+    dependsOn copyscripts
+    // sql code for table_grid
+    from('../linz-admin-boundaries-uploader/sql') {
+        include '**/*.sql'
+    }
+    into 'src/main/webapp/WEB-INF/scripts/sql'
 }
 
 war {
-    dependsOn copyscripts
+    dependsOn copysql
     //exclude 'src/test/java/nz/govt/linz/AdminBoundariesUITest/**'
     manifest {
         attributes 'Implementation-Title': 'LINZ Admin Boundaries Downloader',
@@ -126,7 +137,7 @@ task cargosetup {
 /*task flake8 (overwrite: true){
    ignore = "E3"
 }*/
-// Added as the gradle plugin complains about this not being there
+// Added as the gradle plugin complains
 cargoRedeployRemote.dependsOn war
 cargoDeployRemote.dependsOn war
 cargoUndeployRemote.dependsOn war
@@ -145,24 +156,16 @@ task undeploy {
 
 repositories {
     mavenCentral()
-    //pyGradlePyPi() // Removed this as pyGradle is no longer supported for the targetting python version (3.9.5)
-    // ivy { url "../../ivy/repository" }
-    //flatDir name: "local", dirs: "~/ivy/repository"
-    //flatDir name: "local", dirs: "~/git/aims/build/libs"
 }
 
 dependencies {
 	//NB nz.govt.linz are local ivy repo workarounds. Replace as needed
 	//compile files("~/git/aims/build/libs/aims-dev.war")
 
-    //TEMPORARILY REMOVED, BUT I BELIEVE THIS IS THE LATEST SERVLET API VERSION WE SHOULD BE TARGETTING, OPEN TO SUGGESTIONS THOUGH
-    // providedCompile "jakarta.servlet:jakarta-servlet-api:$jakartaServletApiVersion"
-    //TEMPORARILY REMOVED, BUT I BELIEVE THIS IS THE LATEST SERVLET API VERSION WE SHOULD BE TARGETTING, OPEN TO SUGGESTIONS THOUGH
+    //Should consider moving to a more recent Java servlet, however TBD if this application will be upgraded or rewritten along with AIMS
+    //providedCompile "jakarta.servlet:jakarta-servlet-api:$jakartaServletApiVersion"
 
-    // TEMPORARILY ADDED, LATEST VERSION OF OLDER JAVAX SERVLET LIBRARY
-    providedCompile "javax.servlet:javax.servlet-api:4.0.1"
-    // TEMPORARILY ADDED, LATEST VERSION OF OLDER JAVAX SERVLET LIBRARY
-
+    providedCompile "javax.servlet:javax.servlet-api:$javaxServletApiVersion"
     providedCompile "org.apache.tomcat:tomcat-catalina:$catalinaVersion" 
     providedCompile "org.apache.tomcat:tomcat-util:$tomcatVersion"
     providedCompile "org.postgresql:postgresql:$postgresqlJDBCVersion"
@@ -171,6 +174,7 @@ dependencies {
     implementation "net.sf.py4j:py4j:$py4jVersion"
     implementation "jakarta.json:jakarta.json-api:$jakartaJSONAPIVersion"
     implementation "org.glassfish:jakarta.json:$jakartaJSONVersion"
+    implementation "org.eclipse.parsson:parsson:$eclipseParssonVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion" 
     testImplementation "org.jmock:jmock:$jmockVersion" 
     testImplementation "org.jsoup:jsoup:$jsoupVersion"
