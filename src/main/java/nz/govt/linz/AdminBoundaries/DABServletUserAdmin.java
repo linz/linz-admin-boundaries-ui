@@ -276,7 +276,7 @@ public class DABServletUserAdmin extends DABServlet {
 		}
 		*/
 		try {
-			Runtime.getRuntime().exec("/opt/tomcat8/bin/restart.sh");
+			Runtime.getRuntime().exec("/opt/apache-tomcat/bin/restart.sh");
 			TimeUnit.SECONDS.sleep(5);
 		} catch (IOException ioe) {
 			LOGGER.warning("Cannot restart Tomcat. "+ioe);
