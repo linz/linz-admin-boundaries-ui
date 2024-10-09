@@ -342,11 +342,11 @@ public interface GatewayLoggerInterface {
 			final InputStream is = process.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			// String startTime = ZonedDateTime.now(ZoneId.of("Pacific/Auckland")).format( DateTimeFormatter.ofPattern( "uuuu.MM.dd.HH.mm.ss" ));
-			// LOGGER.info("Started python process with pid: " + Long.toString(process.pid()) + " at " + startTime);
+			LOGGER.info("Started python process with pid: " + Long.toString(process.pid()) + " at " + startTime);
 			do {
 				while ((line = reader.readLine()) != null) { 
 					sb2.append(line+delimiter);
-					//LOGGER.info("PY>"+line);
+					LOGGER.info("PY>"+line);
 				}
 			} 
 			while (process.isAlive());
@@ -355,7 +355,7 @@ public interface GatewayLoggerInterface {
 				sb2.append("No return value. Process exit_code="+process.exitValue()+delimiter);
 			}
 			// String endTime = ZonedDateTime.now(ZoneId.of("Pacific/Auckland")).format( DateTimeFormatter.ofPattern( "uuuu.MM.dd.HH.mm.ss" ));
-			// LOGGER.info("Exited python process with pid: " + Long.toString(process.pid()) + " at " + endTime);
+			LOGGER.info("Exited python process with pid: " + Long.toString(process.pid()) + " at " + endTime);
 		}
 		catch (IOException ioe) {
 			LOGGER.warning("Error starting and reading process output "+ioe);
