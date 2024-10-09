@@ -97,15 +97,15 @@ ufw allow from any to any port 8443 proto tcp
 4. Build tomcat restart functionality
 4.1 Write a simple restart function in tomcat/bin
 #!/bin/sh
-/opt/tomcat8/bin/shutdown.sh
+/opt/apache-tomcat/bin/shutdown.sh
 sleep 5
-/opt/tomcat8/bin/startup.sh -security
+/opt/apache-tomcat/bin/startup.sh -security
 
 > chmod 755 restart.sh
 > chown tomcat8:tomcat8 restart.sh
 
 4.2 Execute the restart from the DAB user webapp
-Runtime.getRuntime().exec("/opt/tomcat8/bin/restart.sh");
+Runtime.getRuntime().exec("/opt/apache-tomcat/bin/restart.sh");
 
 5, Install py4j
 5.1 scp a source copy of py4j to one of the geoservers
