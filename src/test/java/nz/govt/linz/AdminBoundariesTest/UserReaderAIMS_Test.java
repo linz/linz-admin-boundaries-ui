@@ -4,18 +4,18 @@ import nz.govt.linz.AdminBoundaries.UserAdmin.UserReader;
 import nz.govt.linz.AdminBoundaries.UserAdmin.UserReaderAIMS;
 import nz.govt.linz.AdminBoundaries.UserAdmin.UserAIMS;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class UserReaderAIMS_Test {
 	
 	/*
@@ -28,22 +28,22 @@ public class UserReaderAIMS_Test {
 	
 	private static int user_count;// = 10;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {	
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		String[] p3 = UserReaderUtils.genParams(UserReaderAIMS.user_ref_base);
 		reader = new UserReaderAIMS(p3[0],p3[1],p3[2]);
 		user_count = reader.getUserList().size();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		//reader.save();
 	}

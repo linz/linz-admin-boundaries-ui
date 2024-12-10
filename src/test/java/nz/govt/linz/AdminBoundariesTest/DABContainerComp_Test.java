@@ -15,23 +15,23 @@ import nz.govt.linz.AdminBoundaries.DABContainerComp;
 import nz.govt.linz.AdminBoundaries.DABIniReader;
 import nz.govt.linz.AdminBoundaries.IniReader;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
 
 //import org.jmock.Mockery;
 //import org.jmock.Expectations;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class DABContainerComp_Test {
 	
 	//private static Mockery context = new Mockery();
@@ -58,7 +58,7 @@ public class DABContainerComp_Test {
 	private static DABIniReader reader;
 	
 	@SuppressWarnings("serial")
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {		
 		Map<String,Map<String,String>> restore = new HashMap<>();
 		restore.put("user",new HashMap<String,String>(){{put("domain", "fake.domain.com");put("list", "user1,user2");}});
@@ -71,18 +71,18 @@ public class DABContainerComp_Test {
 		ir.dump(restore);
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 		ir.flush();
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		reader = new DABIniReader(CP);
 		container = new DABContainerComp(reader);		
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		reader = null;
 		container = null;

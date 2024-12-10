@@ -206,8 +206,7 @@ public interface GatewayLoggerInterface {
 	 * @author jramsay
 	 */
 	private enum Shell { 
-		Python("PYTHONPATH","/usr/local/lib/python2.7/dist-packages/py4j/"), 
-		Python3("PYTHONPATH","/usr/local/lib/python3.4/dist-packages/py4j"), 
+		Python("PYTHONPATH","/usr/local/lib/python3.8/dist-packages/py4j/"), 
 		Bash("","");
 		String env,path;
 		
@@ -250,7 +249,7 @@ public interface GatewayLoggerInterface {
 		if (procfile.canRead()) { processname = procfile.toString(); }
 		else { processname = DABP; }
 		shell = Shell.inspect(processname);
-		System.setSecurityManager(null);
+		// System.setSecurityManager(null); // Deprecated
 	}
 	
 	/**
@@ -342,17 +341,21 @@ public interface GatewayLoggerInterface {
 			Process process = pb.start();
 			final InputStream is = process.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			// String startTime = ZonedDateTime.now(ZoneId.of("Pacific/Auckland")).format( DateTimeFormatter.ofPattern( "uuuu.MM.dd.HH.mm.ss" ));
+			// LOGGER.info("Started python process with pid: " + Long.toString(process.pid()) + " at " + startTime);
 			do {
 				while ((line = reader.readLine()) != null) { 
 					sb2.append(line+delimiter);
-					//LOGGER.info("PY>"+line);
+					LOGGER.info("PY>"+line);
 				}
 			} 
 			while (process.isAlive());
-			LOGGER.info("process out "+sb2.toString());
+			// LOGGER.info("process out "+sb2.toString());
 			if (sb2.length()==0){
 				sb2.append("No return value. Process exit_code="+process.exitValue()+delimiter);
 			}
+			// String endTime = ZonedDateTime.now(ZoneId.of("Pacific/Auckland")).format( DateTimeFormatter.ofPattern( "uuuu.MM.dd.HH.mm.ss" ));
+			// LOGGER.info("Exited python process with pid: " + Long.toString(process.pid()) + " at " + endTime);
 		}
 		catch (IOException ioe) {
 			LOGGER.warning("Error starting and reading process output "+ioe);

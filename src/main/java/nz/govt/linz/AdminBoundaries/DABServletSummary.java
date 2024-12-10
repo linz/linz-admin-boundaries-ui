@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import nz.govt.linz.AdminBoundaries.DABContainerComp.ImportStatus;
 import nz.govt.linz.AdminBoundaries.DABContainerComp.TableInfo;
@@ -58,8 +58,8 @@ public class DABServletSummary extends DABServlet {
 		description = String.join("\n", 
 				"The downloader interface queries the four destination admin boundary tables comparing them against their temporary source "
 				+ "counterparts. Each table-set can be in one of three states, Vacant, Loaded or Transferred. If a table-set is Vacant no temporary "
-				+ "tables exist and the import tables must be populated from file/WFS.",
-				"The admin boundaries tables are populated over WFS from the StatsNZ data service and from a locally saved file; nz_localities.csv. "
+				+ "tables exist and the import tables must be populated from WFS via the Load button.",
+				"The admin boundaries tables are populated over WFS from the StatsNZ Datafinder and LINZ Data Service. "
 				+ "The StatsNZ dataservice provides; meshblock, meshblock_concordance and territorial_authority.",
 				"If a table-set is in the Loaded state the import tables have been built and column changes applied. At this stage selected users "
 				+ "will be notified and if approved, changes can be pushed through to the final destination tables.",
@@ -68,7 +68,7 @@ public class DABServletSummary extends DABServlet {
 				+ "which returns the results from the table_version function get_table_differences() indicating row number and proposed operation "
 				+ "(u)pdate, (a)dd or (d)elete",
 				"<br/><b>Actions</b>",
-				"<br/><u>LOAD</u> :: Load import tables from file",
+				"<br/><u>LOAD</u> :: Load import tables from Stats NZ / LINZ via WFS",
 				"<br/><u>TRANSFER</u> :: Transfer import tables to destination tables.",
 				"<br/><u>REJECT</u> :: Delete import tables.",
 				"<br/><u>OPTIONAL</u> :: Run any configured post-processing functions.");
@@ -129,6 +129,9 @@ public class DABServletSummary extends DABServlet {
          * If action requested Then start processcontrol and return result.
          * Otherwise return the standard summary table
          */
+
+		String message = "Compare: " + compare + " Action: " + action;
+		LOGGER.info(message);
         
         Map<String, String> info = new HashMap<>(); 
         

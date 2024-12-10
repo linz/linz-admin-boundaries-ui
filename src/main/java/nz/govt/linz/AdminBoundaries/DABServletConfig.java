@@ -14,8 +14,8 @@ package nz.govt.linz.AdminBoundaries;
 import java.io.*;
 import java.util.*;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 
 /**
  * Servlet to allow user to edit python dab config file without redeploying

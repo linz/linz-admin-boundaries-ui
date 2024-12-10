@@ -1,0 +1,7 @@
+*.gradle
+gradle.properties
+# Temp file for running gradle locally with cmd line variables
+*rungradle.bat
+*build
+**/webapp/WEB-INF/scripts
+*bin

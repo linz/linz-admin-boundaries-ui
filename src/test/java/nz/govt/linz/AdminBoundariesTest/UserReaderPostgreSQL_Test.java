@@ -5,7 +5,7 @@ import nz.govt.linz.AdminBoundaries.UserAdmin.UserReaderPostgreSQL;
 import nz.govt.linz.AdminBoundaries.UserAdmin.UserPostgreSQL;
 import nz.govt.linz.AdminBoundaries.UserAdmin.UserPostgreSQL.PGRoles;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -16,16 +16,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
 import org.postgresql.ds.PGSimpleDataSource;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class UserReaderPostgreSQL_Test {
 	
 	private static final String GROUP_DROP = 
@@ -66,7 +66,7 @@ public class UserReaderPostgreSQL_Test {
 
 	private PGSimpleDataSource datasource;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		try( Connection conn = initConnection().getConnection() ){
 			Statement stmt = conn.createStatement();
@@ -77,7 +77,7 @@ public class UserReaderPostgreSQL_Test {
 		}
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void tearDownAfterClass() throws Exception {
 		try( Connection conn = initConnection().getConnection() ){
 			Statement stmt = conn.createStatement();
@@ -86,7 +86,7 @@ public class UserReaderPostgreSQL_Test {
 		}
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		datasource = initConnection();
 		reader = new UserReaderPostgreSQL(datasource);
@@ -105,7 +105,7 @@ public class UserReaderPostgreSQL_Test {
 	}
 	
 	
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		reader.save();
 	}

@@ -3,7 +3,7 @@
 export http_proxy=http://127.0.0.1:3128/
 export https_proxy=http://127.0.0.1:3128/
 
-path=/opt/tomcat8/webapps/ab/WEB-INF/scripts
+path=/opt/apache-tomcat/webapps/ab/WEB-INF/scripts
 
 #extract functions
 update() {
